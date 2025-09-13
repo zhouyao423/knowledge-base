@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2025-01-13
+
+### Changed
+- Updated README to use init-bootstrap command instead of install.sh
+- Simplified Quick Start instructions to 2-step process
+- Added examples of pre-configured commands in README
+
 ## [0.2.0] - 2025-01-13
 
 ### Added
@@ -60,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/heyitsnoah/claudesidian/releases/tag/v0.1.0
