@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2025-01-13
+
+### Fixed
+- Removed CLAUDE.md and settings.local.json from repository tracking
+- These user-specific files are now generated locally by init-bootstrap
+- Added both files to .gitignore to prevent accidental commits
+- Clean repository structure for new users
+
 ## [0.3.0] - 2025-01-13
 
 ### Added
@@ -88,7 +96,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.3...v0.3.0
 [0.2.3]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.1...v0.2.2
