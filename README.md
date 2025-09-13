@@ -23,8 +23,8 @@ cd claudesidian
 # Start Claude Code in the directory
 claude
 
-# Run the interactive setup wizard
-claude run init-bootstrap
+# Run the interactive setup wizard (in Claude Code)
+/init-bootstrap
 ```
 
 This will:
@@ -49,11 +49,11 @@ Please search my vault for any relevant existing notes,
 then help me explore this topic by asking questions.
 ```
 
-Or use one of the pre-configured commands:
-```bash
-claude run thinking-partner   # For collaborative exploration
-claude run daily-review       # For end-of-day reflection
-claude run research-assistant # For deep dives into topics
+Or use one of the pre-configured commands (in Claude Code):
+```
+/thinking-partner   # For collaborative exploration
+/daily-review       # For end-of-day reflection
+/research-assistant # For deep dives into topics
 ```
 
 ## Folder Structure
@@ -148,7 +148,7 @@ Pre-configured AI assistants ready to use:
 - `create-command` - Build new custom commands
 - `de-ai-ify` - Remove AI writing patterns from text
 
-Run with: `claude run [command-name]`
+Run with: `/[command-name]` in Claude Code
 
 ## Vision & Document Analysis (Optional)
 

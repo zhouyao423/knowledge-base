@@ -3,7 +3,7 @@
 **⚠️ IMPORTANT: This CLAUDE.md is for maintaining the claudesidian repository itself.**
 
 **If you're a user setting up your own Obsidian vault:**
-- Run `claude run init-bootstrap` to create your personalized CLAUDE.md
+- Run `/init-bootstrap` in Claude Code to create your personalized CLAUDE.md
 - That command will overwrite this file with your custom configuration
 - This file is only for contributors working on the claudesidian project
 
@@ -86,7 +86,7 @@ claudesidian/
 git clone https://github.com/heyitsnoah/claudesidian.git test-claudesidian
 cd test-claudesidian
 pnpm install
-claude run init-bootstrap  # Test the setup flow
+# Then in Claude Code: /init-bootstrap  # Test the setup flow
 ```
 
 ### Important Files

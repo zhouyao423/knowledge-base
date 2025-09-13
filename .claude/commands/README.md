@@ -7,35 +7,35 @@ Pre-configured commands to enhance your Claude Code + Obsidian workflow.
 ### 🤔 thinking-partner
 Engage Claude as a thinking partner for exploring complex problems.
 ```
-claude run thinking-partner
+/thinking-partner
 ```
 Best for: Brainstorming, problem exploration, developing ideas
 
 ### 📥 inbox-processor
 Process and organize items in your Inbox folder.
 ```
-claude run inbox-processor
+/inbox-processor
 ```
 Best for: Weekly inbox cleanup, organizing captures
 
 ### 🔍 research-assistant
 Conduct thorough research on any topic using your vault.
 ```
-claude run research-assistant
+/research-assistant
 ```
 Best for: Deep dives, literature reviews, knowledge synthesis
 
 ### 📅 daily-review
 End-of-day review to capture progress and plan tomorrow.
 ```
-claude run daily-review
+/daily-review
 ```
 Best for: Daily shutdown ritual, reflection
 
 ### 📊 weekly-synthesis
 Create a comprehensive synthesis of the week's work.
 ```
-claude run weekly-synthesis
+/weekly-synthesis
 ```
 Best for: Weekly reviews, pattern recognition
 
@@ -51,9 +51,9 @@ Best for: Weekly reviews, pattern recognition
 
 ## Using Commands
 
-### Method 1: Direct
+### Method 1: Direct (in Claude Code)
 ```
-claude run [command-name]
+/[command-name]
 ```
 
 ### Method 2: Reference in Chat
