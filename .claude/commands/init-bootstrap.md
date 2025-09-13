@@ -101,6 +101,7 @@ Then generate a customized CLAUDE.md file tailored to their needs.
    - Set up .gitignore if using git (include .mcp.json, node_modules)
    - Create initial templates if requested
    - Create WEEKLY_REVIEW.md if user wants review ritual
+   - Remove FIRST_RUN marker file if it exists
    - Make initial git commit if repository was initialized
 
 8. **Run Test Commands**
@@ -197,6 +198,7 @@ Setup completed with: ✅ Dependencies ✅ Folder structure ✅ Git initialized
 ✅ Folder structure created
 ✅ Git repository initialized and disconnected from original
 ✅ CLAUDE.md personalized
+✅ First-run setup completed
 [✅ MCP Gemini Vision configured - if set up]
 [✅ First commit made - if git was initialized]
 ```
@@ -224,6 +226,7 @@ Now setting up your environment...
 ✅ Dependencies installed
 ✅ Core folders created
 ✅ Git repository ready (disconnected from original claudesidian)
+✅ First-run marker removed
 
 Now let me ask you a few questions to customize your setup:
 
