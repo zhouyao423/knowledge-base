@@ -12,11 +12,19 @@ This is a pre-configured Obsidian vault structure designed to work seamlessly wi
 
 ## Quick Start
 
-### 1. Clone the Repository
+### 1. Get the Starter Kit
+
+**Option A: Clone with Git**
 ```bash
-git clone https://github.com/heyitsnoah/claudesidian.git
-cd claudesidian
+# Clone with your preferred folder name
+git clone https://github.com/heyitsnoah/claudesidian.git my-vault
+cd my-vault
 ```
+
+**Option B: Download ZIP (no Git required)**
+1. Click "Code" → "Download ZIP" on GitHub
+2. Extract to your desired location
+3. Open the folder in Claude Code
 
 ### 2. Run the Setup Wizard
 ```bash
@@ -29,6 +37,8 @@ claude
 
 This will:
 - Install dependencies automatically
+- Disconnect from the original claudesidian repository
+- Import your existing Obsidian vault (if you have one)
 - Ask you about your workflow preferences
 - Create a personalized CLAUDE.md configuration
 - Set up your folder structure

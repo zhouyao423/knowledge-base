@@ -23,9 +23,14 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 ## Process
 
 1. **Initial Environment Setup**
+   - Check current folder name and ask if they want to rename it
+   - If yes, guide them through renaming (handle parent directory move)
    - Check for package.json and run `pnpm install` if needed
    - Verify core dependencies are installed
-   - Check git status and initialize if needed
+   - Check git status:
+     - If no .git folder: Initialize git repository
+     - If has remote origin: Remove it to disconnect from claudesidian
+     - If clean local repo: Ready to go
    - Create base folder structure (00_Inbox through 06_Metadata)
 
 2. **Check Existing Configuration**
@@ -190,7 +195,7 @@ Setup completed with: ✅ Dependencies ✅ Folder structure ✅ Git initialized
 
 ✅ Dependencies installed (pnpm install)
 ✅ Folder structure created
-✅ Git repository initialized
+✅ Git repository initialized and disconnected from original
 ✅ CLAUDE.md personalized
 [✅ MCP Gemini Vision configured - if set up]
 [✅ First commit made - if git was initialized]
@@ -202,14 +207,23 @@ Setup completed with: ✅ Dependencies ✅ Folder structure ✅ Git initialized
 User: claude run init-bootstrap
 Assistant: Welcome! I'll help you set up your personalized Obsidian + Claude configuration.
 
-First, let me set up your environment...
+First, let me check your setup...
+
+Current folder name: claudesidian
+Would you like to rename this folder to something more personal? (e.g., my-vault, knowledge-base, obsidian-notes)
+
+[If yes: Handles the rename by moving to parent directory and back]
+
+Now setting up your environment...
 [Runs pnpm install to install dependencies]
+[Removes git remote to disconnect from original]
 [Creates folder structure if missing]
 [Checks git status]
 
+✅ Folder renamed (if requested)
 ✅ Dependencies installed
 ✅ Core folders created
-✅ Git repository ready
+✅ Git repository ready (disconnected from original claudesidian)
 
 Now let me ask you a few questions to customize your setup:
 
