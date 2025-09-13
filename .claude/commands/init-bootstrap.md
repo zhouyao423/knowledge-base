@@ -41,6 +41,15 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 4. **Ask Configuration Questions**
    - "Do you follow the PARA method or have a different organization system?"
    - "What are your main use cases? (research, writing, project management, knowledge base, daily notes)"
+
+   **If using PARA, ask specific setup questions:**
+   [PARA Method by Tiago Forte](https://fortelabs.com/blog/para/)
+   - "What active projects are you working on?" (Create folders in 01_Projects)
+   - "What areas of responsibility do you maintain?" (e.g., Work, Health, Finance, Family)
+   - "What topics do you research frequently?" (Set up in 03_Resources)
+   - "Any projects you recently completed?" (Can archive with summaries)
+
+   **General preferences:**
    - "Do you use any specific plugins or tools with Obsidian?"
    - "What's your preferred naming convention for files?"
    - "Do you work with attachments frequently? (images, PDFs, etc.)"
@@ -48,6 +57,8 @@ Then generate a customized CLAUDE.md file tailored to their needs.
    - "Any specific websites or resources you reference often?"
    - "Do you have any specific writing style preferences?"
    - "Are there any workflows or patterns you want Claude to follow?"
+   - "Would you like a weekly review ritual? (e.g., Thursday project review)"
+   - "Do you prefer 'thinking mode' (questions/exploration) vs 'writing mode'?"
 
 5. **Optional MCP Server Setup**
    - Ask: "Would you like to set up Gemini Vision for analyzing images and PDFs?"
@@ -61,20 +72,30 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 6. **Generate Custom Configuration**
    - Start with CLAUDE-BOOTSTRAP.md as base
    - Add user-specific sections:
-     - Custom folder structure
+     - Custom folder structure with their actual projects/areas
      - Personal workflows
      - Preferred tools and scripts
      - Specific guidelines
      - MCP configuration if set up
    - Include their websites/resources if provided
    - Add any custom naming conventions
+   - Pre-populate with their projects and areas:
+     - Create project folders in 01_Projects/
+     - Create area folders in 02_Areas/
+     - Create resource topics in 03_Resources/
+     - Add README files explaining each project/area
 
 7. **Create Supporting Files**
    - Generate initial folder structure if new vault
    - Create README files for main folders
+   - For each project folder, create subfolders:
+     - Research/ (source materials)
+     - Chats/ (AI conversations)
+     - Daily Progress/ (running log)
    - Create 05_Attachments/Organized/ directory
    - Set up .gitignore if using git (include .mcp.json, node_modules)
    - Create initial templates if requested
+   - Create WEEKLY_REVIEW.md if user wants review ritual
    - Make initial git commit if repository was initialized
 
 8. **Run Test Commands**
@@ -112,6 +133,16 @@ Setup completed with: ✅ Dependencies ✅ Folder structure ✅ Git initialized
 ### Project Management
 [Their specific approach]
 
+### Research Method (Noah Brier Style)
+- Capture everything you read
+- Let important ideas naturally resurface
+- Start with writing to test understanding
+- Use search, not tags, to find things
+- [Learn more from Noah's system](https://every.to/superorganizers/ceo-by-day-internet-sleuth-by-night-267452)
+
+### Weekly Review Ritual
+[If enabled: Every Thursday at 4pm, review all projects]
+
 ## Your Preferences
 
 ### File Naming
@@ -146,6 +177,15 @@ Setup completed with: ✅ Dependencies ✅ Folder structure ✅ Git initialized
 2. [Next action based on their goals]
 3. [Specific to their workflow]
 
+## Pro Tips from Research Masters
+
+- **Be a token maximalist**: Provide lots of context to Claude
+- **Writing scales**: Document everything for future reference ([Noah Brier](https://every.to/superorganizers/ceo-by-day-internet-sleuth-by-night-267452))
+- **Trust emergence**: Important ideas will keep surfacing
+- **Start with writing**: Always begin projects in text form
+- **Review regularly**: Set aside time weekly to prune and update
+- **PARA Method**: Projects, Areas, Resources, Archive ([Tiago Forte](https://fortelabs.com/blog/para/))
+
 ## Setup Summary
 
 ✅ Dependencies installed (pnpm install)
@@ -179,6 +219,38 @@ Now let me ask you a few questions to customize your setup:
 User: I'll use it for research and writing, plus managing client projects
 
 Assistant: Great! I'll configure your vault for research, writing, and client project management.
+
+2. **What specific projects are you currently working on?**
+   (I'll create folders for each in 01_Projects)
+
+User: I'm writing a book about productivity systems, building a SaaS app, and planning a conference talk
+
+Assistant: Perfect! I'll set up project folders for:
+   - 01_Projects/Book - Productivity Systems/
+   - 01_Projects/SaaS App Development/
+   - 01_Projects/Conference Talk/
+
+3. **What ongoing areas of responsibility do you maintain?**
+   (These go in 02_Areas - things without an end date)
+
+User: My newsletter, health & fitness, personal finances, and family activities
+
+Assistant: I'll create area folders for:
+   - 02_Areas/Newsletter/
+   - 02_Areas/Health & Fitness/
+   - 02_Areas/Finances/
+   - 02_Areas/Family/
+
+4. **What topics do you frequently research or reference?**
+   (I'll organize these in 03_Resources)
+
+User: AI tools, productivity methods, SaaS metrics, and writing techniques
+
+Assistant: Setting up resource folders for:
+   - 03_Resources/AI Tools/
+   - 03_Resources/Productivity Methods/
+   - 03_Resources/SaaS Metrics/
+   - 03_Resources/Writing Techniques/
 
 [Continues with questions...]
 

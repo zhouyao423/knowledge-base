@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "Bash(gitleaks detect:*)"
+      "Bash(gitleaks detect:*)",
+      "WebFetch(domain:every.to)"
     ],
     "deny": [],
     "ask": []
