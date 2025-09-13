@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-01-13
+
+### Added
+- Intelligent upgrade command (`/upgrade`) with AI-powered semantic merging
+- Smart conflict resolution that preserves user customizations while adding new features
+- Automatic backup system with rollback capabilities
+- Selective update categories (AI-mergeable, auto-safe, protected)
+- Based on 2025 best practices for LLM-powered code migration
+
 ## [0.2.3] - 2025-01-13
 
 ### Changed
@@ -79,7 +88,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.3...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.3...v0.3.0
 [0.2.3]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.0...v0.2.1
