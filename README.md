@@ -12,38 +12,48 @@ This is a pre-configured Obsidian vault structure designed to work seamlessly wi
 
 ## Quick Start
 
-### 1. Clone and Install
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/heyitsnoah/claudesidian.git
 cd claudesidian
-./install.sh  # Automated setup script
 ```
 
-Or manually:
+### 2. Run the Setup Wizard
 ```bash
-pnpm install  # Install dependencies
-mkdir -p 05_Attachments/Organized  # Create organized folder
+# Start Claude Code in the directory
+claude
+
+# Run the interactive setup wizard
+claude run init-bootstrap
 ```
 
-### 2. Open in Obsidian (Optional but Recommended)
+This will:
+- Install dependencies automatically
+- Ask you about your workflow preferences
+- Create a personalized CLAUDE.md configuration
+- Set up your folder structure
+- Optionally configure Gemini Vision for image/video analysis
+- Initialize Git for version control
+
+### 3. Open in Obsidian (Optional but Recommended)
 - Download [Obsidian](https://obsidian.md)
 - Open vault from the claudesidian folder
 - This gives you a visual interface alongside Claude Code
 
-### 3. Start Claude Code
-```bash
-# Make sure you have Claude Code installed
-# Start it in the vault directory
-claude
-```
-
 ### 4. Your First Session
 Tell Claude Code:
 ```
-I'm starting a new project about [topic]. 
+I'm starting a new project about [topic].
 I'm in thinking mode, not writing mode.
-Please search my vault for any relevant existing notes, 
+Please search my vault for any relevant existing notes,
 then help me explore this topic by asking questions.
+```
+
+Or use one of the pre-configured commands:
+```bash
+claude run thinking-partner   # For collaborative exploration
+claude run daily-review       # For end-of-day reflection
+claude run research-assistant # For deep dives into topics
 ```
 
 ## Folder Structure
