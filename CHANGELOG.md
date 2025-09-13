@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2025-01-13
+
+### Added
+- Simplified setup process with enhanced init-bootstrap command:
+  - Automatic disconnection from original repository
+  - Folder rename assistance for non-git users
+  - Support for both git clone and ZIP download methods
+  - Clear prompts for importing existing Obsidian vaults
+- Multiple setup paths in README for different user skill levels
+
+### Changed
+- init-bootstrap now handles complete environment setup including git management
+- README updated with clearer Quick Start instructions for both technical and non-technical users
+
 ## [0.3.1] - 2025-01-13
 
 ### Fixed
@@ -96,7 +110,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.3...v0.3.0
 [0.2.3]: https://github.com/heyitsnoah/claudesidian/compare/v0.2.2...v0.2.3
