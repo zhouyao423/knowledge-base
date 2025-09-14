@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2025-01-13
+
+### Added
+- Automatic update check on session start
+- SessionStart hook that fetches latest version from GitHub and compares to local
+- Update notifications when newer versions are available
+- check-updates npm script for version comparison
+- Works even after disconnecting from original repository
+
+### Changed
+- Enhanced release command documentation with clearer semantic versioning guidelines
+- Better guidance on when to use feat: vs fix: vs refactor: in commits
+
 ## [0.7.0] - 2025-01-13
 
 ### Added
@@ -164,7 +177,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.4.0...v0.5.0
