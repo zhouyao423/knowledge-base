@@ -55,6 +55,11 @@ Automates the entire release process: analyzes recent commits to determine versi
 
 ### Semantic Versioning (MAJOR.MINOR.PATCH)
 
+**Quick Decision Guide:**
+- Can users do something they couldn't do before? → **MINOR**
+- Did something that worked break? → **MAJOR** (if breaking) or **PATCH** (if fixing)
+- Did something that worked get better? → **PATCH**
+
 **MAJOR** (1.0.0 → 2.0.0):
 - Breaking changes that require users to change their code/config
 - Removing features or commands
@@ -64,26 +69,31 @@ Automates the entire release process: analyzes recent commits to determine versi
 
 **MINOR** (1.0.0 → 1.1.0):
 - **NEW capabilities** added (not enhancements to existing features)
+- Making something possible that wasn't possible before
 - New commands, new tools, new integrations
 - New optional features that don't affect existing functionality
+- Significant architectural changes that enable new functionality
 - Commits starting with "feat:" that add NEW functionality
 - Examples:
   - Adding a new `/command`
   - Adding a new MCP server
   - Adding vault import capability (first time)
+  - Making upgrade work without git connection (was impossible before)
+  - Enabling a feature to work offline when it required internet before
 
 **PATCH** (1.0.0 → 1.0.1):
 - Bug fixes and minor improvements
-- Enhancements to existing features
+- Enhancements to existing features (that already worked)
 - Performance improvements
 - Documentation updates
 - Refactoring without changing behavior
 - Commits with "fix:", "docs:", "style:", "refactor:", "perf:", "test:", "chore:"
 - Examples:
-  - Making an existing command smarter
+  - Making an existing command smarter (but not enabling new use cases)
   - Improving error messages
   - Fixing bugs in existing features
   - Enhancing existing import to be more intelligent
+  - Improving UI/formatting of existing features
 
 ### Commit Message Best Practices
 
