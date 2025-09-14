@@ -43,11 +43,14 @@ claude
 This will:
 - Install dependencies automatically
 - Disconnect from the original claudesidian repository
-- Import your existing Obsidian vault (if you have one)
+- **Intelligently analyze** your existing vault structure and patterns
+- **Import your existing Obsidian vault** safely to OLD_VAULT/ (if you have one)
+- **Research your public work** for personalized context (with your permission)
 - Ask you about your workflow preferences
 - Create a personalized CLAUDE.md configuration
 - Set up your folder structure
 - Optionally configure Gemini Vision for image/video analysis
+- Optionally configure Firecrawl for web research
 - Initialize Git for version control
 
 ### 3. Open in Obsidian (Optional but Recommended)
@@ -162,8 +165,12 @@ Pre-configured AI assistants ready to use:
 - `weekly-synthesis` - Find patterns in your week
 - `create-command` - Build new custom commands
 - `de-ai-ify` - Remove AI writing patterns from text
+- `upgrade` - Update to the latest claudesidian version
+- `init-bootstrap` - Re-run the setup wizard
 
 Run with: `/[command-name]` in Claude Code
+
+**Stay Updated**: Claudesidian automatically checks for updates when you start Claude Code and will remind you to run `/upgrade` when new features are available.
 
 ## Vision & Document Analysis (Optional)
 
@@ -175,6 +182,16 @@ With Gemini MCP configured, you can:
 - Process documents
 
 See `.claude/mcp-servers/README.md` for setup
+
+## Web Research (Optional)
+
+With Firecrawl configured, you can save web content directly to your vault:
+- Save entire articles as markdown
+- Preserve content permanently
+- Make web research searchable
+- Build a research library
+
+Tell Claude: "Save this article to my vault: [URL]" and it's done!
 
 ## Helper Scripts
 
