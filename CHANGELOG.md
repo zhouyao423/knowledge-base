@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.5] - 2025-01-13
+
+### Fixed
+- Upgrade command now works without git connection for disconnected users
+- Clone latest version to .tmp/ directory instead of requiring upstream remote
+- Use .tmp/ instead of /tmp/ to hide upgrade files from Obsidian
+- Added user choice prompt when local modifications are detected
+- Added verification step to ensure all files were properly addressed
+- Added .tmp/ to .gitignore for cleaner repository
+
 ## [0.8.4] - 2025-01-13
 
 ### Fixed
@@ -212,7 +222,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.4...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.5...HEAD
+[0.8.5]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.4...v0.8.5
 [0.8.4]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.3...v0.8.4
 [0.8.3]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.2...v0.8.3
 [0.8.2]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.1...v0.8.2
