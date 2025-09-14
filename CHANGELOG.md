@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.4] - 2025-01-13
+
+### Fixed
+- Simplified upgrade command to systematically check all system files
+- Created upgrade checklist to track progress file-by-file
+- Filtered upgrades to only claudesidian system files, not user content
+- Added explicit file-by-file diff review before updating
+- Made upgrade process resumable with checklist tracking
+
 ## [0.8.3] - 2025-01-13
 
 ### Fixed
@@ -203,7 +212,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.3...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.4...HEAD
+[0.8.4]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.3...v0.8.4
 [0.8.3]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.2...v0.8.3
 [0.8.2]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.1...v0.8.2
 [0.8.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.0...v0.8.1
