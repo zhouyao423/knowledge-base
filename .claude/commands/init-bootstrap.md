@@ -25,7 +25,9 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 1. **Initial Environment Setup**
    - Check current folder name and ask if they want to rename it
    - If yes, guide them through renaming (handle parent directory move)
-   - Check for package.json and run `pnpm install` if needed
+   - Check for package.json and install dependencies:
+     - Try `pnpm install` first (faster, better)
+     - Fall back to `npm install` if pnpm not available
    - Verify core dependencies are installed
    - Check git status:
      - If no .git folder: Initialize git repository
@@ -39,11 +41,22 @@ Then generate a customized CLAUDE.md file tailored to their needs.
    - Check for CLAUDE-BOOTSTRAP.md template
 
 3. **Gather Vault Information**
-   - Ask if they have an existing vault or starting new
-   - If existing, explore current folder structure
-   - Document any custom organization patterns
+   - Search common locations for existing Obsidian vaults (.obsidian folder)
+   - Check: ~/Documents, ~/Desktop, home directory, current directory parent
+   - If found, ask: "Found Obsidian vault at [path]. Is this the vault you want to import?"
+   - Count files correctly: `find [path] -type f -name "*.md" | wc -l` (no depth limit)
+   - Show vault size: `du -sh [path]`
+   - Analyze file naming patterns: check for dates (YYYY-MM-DD), kebab-case, Title Case, etc.
+   - Detect folder organization: PARA, Zettelkasten, custom structure
+   - Check for daily notes pattern, templates folder, attachments location
+   - If not the right one or none found, ask for path to existing vault
+   - If no existing vault, they're starting fresh
 
 4. **Ask Configuration Questions**
+   - "What's your name?" (for personalization)
+   - "Would you like me to research your public work to better understand your context?"
+     - If yes: Search and show findings, ask "Is this you?" to disambiguate
+     - Save relevant context about their work, writing style, areas of expertise
    - "Do you follow the PARA method or have a different organization system?"
    - "What are your main use cases? (research, writing, project management, knowledge base, daily notes)"
 
@@ -56,7 +69,7 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 
    **General preferences:**
    - "Do you use any specific plugins or tools with Obsidian?"
-   - "What's your preferred naming convention for files?"
+   - Analyze existing files to detect naming convention automatically
    - "Do you work with attachments frequently? (images, PDFs, etc.)"
    - "Do you use git for version control?"
    - "Any specific websites or resources you reference often?"
@@ -65,16 +78,48 @@ Then generate a customized CLAUDE.md file tailored to their needs.
    - "Would you like a weekly review ritual? (e.g., Thursday project review)"
    - "Do you prefer 'thinking mode' (questions/exploration) vs 'writing mode'?"
 
-5. **Optional MCP Server Setup**
-   - Ask: "Would you like to set up Gemini Vision for analyzing images and PDFs?"
+5. **Optional Tool Setup**
+
+   **Gemini Vision (already included)**
+   - Ask: "Gemini Vision is already included for analyzing images, PDFs, and videos. Would you like to activate it?"
+   - Explain: "You just need a free API key from Google. This lets Claude analyze any visual content in your vault."
    - If yes:
-     - Guide to get API key from https://aistudio.google.com/apikey
+     - Guide to get API key from https://aistudio.google.com/apikey (free, takes 30 seconds)
      - Help add to shell profile (.zshrc, .bashrc, etc.)
      - Run `claude mcp add --scope project gemini-vision node .claude/mcp-servers/gemini-vision.mjs`
      - Configure .mcp.json with API key
      - Test the connection with a sample command
 
+   **Firecrawl (already included)**
+   - Ask: "Firecrawl scripts are included for saving web content. Would you like to set them up?"
+   - Explain: "This lets you save entire websites as markdown. You just need a free API key from firecrawl.dev"
+   - If yes:
+     - Guide to get API key from https://firecrawl.dev (free tier available)
+     - Help configure the scripts in .scripts/
+     - Show example usage: `.scripts/firecrawl-scrape.sh https://example.com`
+
 6. **Generate Custom Configuration**
+   - Save preferences to `.claude/vault-config.json`:
+     ```json
+     {
+       "user": {
+         "name": "Jane Smith",
+         "context": "Tech writer, founder of XYZ startup, author of...",
+         "publicProfile": true
+       },
+       "vaultPath": "/path/to/existing/vault",
+       "fileNamingPattern": "detected-pattern",
+       "organizationMethod": "PARA",
+       "primaryUses": ["research", "writing", "projects"],
+       "tools": {
+         "geminiVision": true,
+         "firecrawl": false
+       },
+       "projects": ["Book - Productivity", "SaaS App"],
+       "areas": ["Newsletter", "Health"],
+       "importedAt": "2025-01-13"
+     }
+     ```
    - Start with CLAUDE-BOOTSTRAP.md as base
    - Add user-specific sections:
      - Custom folder structure with their actual projects/areas
@@ -90,7 +135,20 @@ Then generate a customized CLAUDE.md file tailored to their needs.
      - Create resource topics in 03_Resources/
      - Add README files explaining each project/area
 
-7. **Create Supporting Files**
+7. **Import Existing Vault (if applicable)**
+   - If user has existing vault:
+     - Create OLD_VAULT folder: `mkdir OLD_VAULT`
+     - Copy entire vault preserving structure: `cp -r [vault-path]/* ./OLD_VAULT/`
+     - Copy Obsidian configuration: `cp -r [vault-path]/.obsidian ./`
+     - Check for and copy other important files:
+       - `.trash/` (Obsidian's trash folder)
+       - `.smart-connections/` (if using that plugin)
+       - Any workspace files: `.obsidian.vimrc`, etc.
+     - Skip copying: `.git/` (they'll have their own), `.claude/` (using ours)
+     - Show summary: "Imported your vault to OLD_VAULT/ (X files, Y folders)"
+     - Explain: "Your original structure is preserved in OLD_VAULT. You can gradually migrate files to the PARA folders as needed."
+
+8. **Create Supporting Files**
    - Generate initial folder structure if new vault
    - Create README files for main folders
    - For each project folder, create subfolders:
@@ -104,13 +162,13 @@ Then generate a customized CLAUDE.md file tailored to their needs.
    - Remove FIRST_RUN marker file if it exists
    - Make initial git commit if repository was initialized
 
-8. **Run Test Commands**
+9. **Run Test Commands**
    - Execute `pnpm vault:stats` to verify scripts work
    - Test attachment commands if folders exist
    - Test MCP tools if configured
    - Verify git is tracking files correctly
 
-9. **Provide Next Steps**
+10. **Provide Next Steps**
    - Summary of what was created and configured
    - Quick start guide specific to their setup
    - List of available commands they can use
@@ -194,7 +252,7 @@ Setup completed with: ✅ Dependencies ✅ Folder structure ✅ Git initialized
 
 ## Setup Summary
 
-✅ Dependencies installed (pnpm install)
+✅ Dependencies installed (pnpm/npm)
 ✅ Folder structure created
 ✅ Git repository initialized and disconnected from original
 ✅ CLAUDE.md personalized
@@ -211,16 +269,31 @@ Assistant: Welcome! I'll help you set up your personalized Obsidian + Claude con
 
 First, let me check your setup...
 
-Current folder name: claudesidian
+📁 **Folder Name Check**
+Current folder: claudesidian
 Would you like to rename this folder to something more personal? (e.g., my-vault, knowledge-base, obsidian-notes)
+*Why: Your vault should have a name that makes sense to you - you'll see it every day!*
 
 [If yes: Handles the rename by moving to parent directory and back]
 
 Now setting up your environment...
-[Runs pnpm install to install dependencies]
+
+📦 **Installing Dependencies**
+[Checks for pnpm, uses npm if not available]
+[Installs dependencies with pnpm/npm]
+*Why: These tools enable Claude Code to work with your vault effectively*
+
+🔓 **Disconnecting from Original Repository**
 [Removes git remote to disconnect from original]
-[Creates folder structure if missing]
-[Checks git status]
+*Why: This ensures you won't accidentally push your personal notes to the public repo*
+
+📂 **Creating PARA Folder Structure**
+[Creates folders: 00_Inbox through 06_Metadata]
+*Why: PARA method helps organize your knowledge into Projects, Areas, Resources, and Archive*
+
+🎯 **Finalizing Setup**
+[Checks git status and removes first-run marker]
+*Why: Git gives you version control, and removing the marker ensures you won't see the welcome message again*
 
 ✅ Folder renamed (if requested)
 ✅ Dependencies installed
@@ -230,7 +303,40 @@ Now setting up your environment...
 
 Now let me ask you a few questions to customize your setup:
 
-1. **What will you primarily use this vault for?**
+🔍 **Searching for existing Obsidian vaults...**
+[Searches ~/Documents, ~/Desktop, ~/, and parent directories]
+
+Found Obsidian vault at: ~/Documents/MyNotes
+📊 Vault stats: 2,517 markdown files, 1.1GB total size
+Is this the vault you'd like to import? (yes/no/different path)
+
+User: yes
+
+Great! I'll help you import your existing notes into the PARA structure.
+
+1. **What's your name?** (This helps me personalize your experience)
+
+User: Noah Brier
+
+2. **Would you like me to research your public work?**
+   This helps me better understand your context and tailor the setup to your needs.
+
+User: Yes
+
+[Searches for information]
+
+I found several Noah Briers online:
+- Noah Brier, co-founder of Variance and Percolate, writer at every.to
+- Noah Brier, photographer based in Portland
+- Noah Brier, data scientist at Microsoft
+
+Which one is you? (or none of these)
+
+User: The first one - Variance and Percolate
+
+Great! I see you write about technology, creativity, and building products. I'll keep this context in mind.
+
+3. **What will you primarily use this vault for?**
    (research, writing, project management, daily notes, knowledge base, or combination?)
 
 User: I'll use it for research and writing, plus managing client projects
@@ -271,7 +377,10 @@ Assistant: Setting up resource folders for:
 
 [Continues with questions...]
 
-Would you like to set up Gemini Vision for analyzing images and PDFs? This requires a Google API key.
+**Gemini Vision Setup**
+Gemini Vision is already included in claudesidian! It can analyze images, PDFs, and videos in your vault.
+To activate it, you just need a free Google API key (takes 30 seconds).
+Would you like to set it up now?
 
 User: Yes, that sounds useful
 

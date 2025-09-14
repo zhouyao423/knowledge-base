@@ -16,9 +16,14 @@ This is a pre-configured Obsidian vault structure designed to work seamlessly wi
 
 **Option A: Clone with Git**
 ```bash
-# Clone with your preferred folder name
+# Clone with your preferred folder name (replace 'my-vault' with any name you like)
 git clone https://github.com/heyitsnoah/claudesidian.git my-vault
 cd my-vault
+
+# Examples:
+# git clone https://github.com/heyitsnoah/claudesidian.git obsidian-notes
+# git clone https://github.com/heyitsnoah/claudesidian.git knowledge-base
+# git clone https://github.com/heyitsnoah/claudesidian.git second-brain
 ```
 
 **Option B: Download ZIP (no Git required)**
