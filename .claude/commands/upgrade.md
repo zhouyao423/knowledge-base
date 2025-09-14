@@ -20,45 +20,71 @@ Intelligently upgrades your claudesidian installation by fetching the latest rel
 
 ## Process
 
-### 1. **Version Check & Release Fetch**
+### 1. **Version Check & Setup**
    - Get current version from package.json
-   - Fetch latest release from GitHub API (heyitsnoah/claudesidian)
-   - Compare versions and show what updates are available
-   - Download changelog to understand what's new
-
-### 2. **Smart File Analysis**
-   - Scan for files that have changed between versions
-   - Categorize files into update safety levels:
-     - 🤖 **AI-Mergeable**: Commands, agents, templates (analyze for customizations)
-     - ⚡ **Auto-Safe**: New files, scripts, dependencies
-     - 🛡️ **Never Touch**: User content, CLAUDE.md, .mcp.json
-
-### 3. **Semantic Customization Detection**
-   For each AI-mergeable file, Claude analyzes:
-   - "What customizations has the user made?"
-   - "What's the user's intent behind these changes?"
-   - "What new features are being added upstream?"
-   - "How can I preserve their style/preferences while adding new capabilities?"
-
-### 4. **Intelligent Merge Generation**
-   - Create hybrid versions that combine:
-     - User's writing style and preferences
-     - User's custom prompts and workflows
-     - New upstream features and capabilities
-     - Improved functionality from latest version
-   - Generate preview of proposed changes
-
-### 5. **Safe Application**
+   - Fetch latest release from GitHub (heyitsnoah/claudesidian)
    - Create timestamped backup in `.backup/upgrade-YYYY-MM-DD-HHMMSS/`
-   - Apply updates incrementally with validation
-   - Test critical functionality after each change
-   - Provide rollback instructions if issues occur
+   - Fetch upstream changes: `git fetch upstream --tags`
 
-### 6. **Post-Upgrade Verification**
-   - Verify all commands still work
-   - Check that MCP servers are still configured
-   - Test custom workflows are preserved
-   - Update version tracking
+### 2. **Create Upgrade Checklist**
+   - Get list of SYSTEM files that need checking (NOT user content):
+     ```bash
+     # Only check claudesidian system files, not user notes
+     git diff HEAD upstream/main --name-only | grep -E '^(\.claude/|\.scripts/|package\.json|CHANGELOG\.md|README\.md|\.gitignore)'
+     ```
+   - Explicitly EXCLUDE:
+     - User content folders (00_Inbox, 01_Projects, etc.)
+     - User's CLAUDE.md (their personalized version)
+     - vault-config.json (user's vault configuration)
+     - .obsidian/ (user's Obsidian settings)
+     - Any .md files in the root except README and CHANGELOG
+   - Create `.upgrade-checklist.md` with only system files that differ
+   - Mark each file with status: `[ ] pending`, `[x] updated`, `[-] skipped`
+   - Group files by type for easier review:
+     ```markdown
+     ## Commands (12 files)
+     [ ] .claude/commands/init-bootstrap.md
+     [ ] .claude/commands/release.md
+     [ ] .claude/commands/thinking-partner.md
+     ...
+
+     ## Settings (2 files)
+     [ ] .claude/settings.json
+     [ ] .claude/settings.local.json
+
+     ## Core Files (3 files)
+     [ ] package.json
+     [ ] CHANGELOG.md
+     [ ] README.md
+     ```
+
+### 3. **File-by-File Review**
+   For EACH file in the checklist:
+   1. Show the diff: `git diff HEAD upstream/main -- [file]`
+   2. Determine update strategy:
+      - **Direct replace**: Commands, agents, scripts with no user changes
+      - **Skip**: User's CLAUDE.md, vault-config.json, .mcp.json
+      - **Merge needed**: Files with both upstream and user changes
+   3. Apply the update
+   4. Mark complete in checklist: `[x]`
+   5. Move to next file
+
+### 4. **Update Types**
+   - **Safe to replace**: `.claude/commands/*.md`, `.claude/agents/*.md`, `.scripts/*`
+   - **Needs review**: `package.json` (preserve user's custom scripts)
+   - **Never touch**: User content folders, CLAUDE.md, API configs
+
+### 5. **Progress Tracking**
+   - Save progress after each file in `.upgrade-checklist.md`
+   - If interrupted, can resume from where you left off
+   - Show progress: "Updating file 5 of 23..."
+   - Clear indication of what's been done and what's remaining
+
+### 6. **Final Steps**
+   - Update version in package.json
+   - Verify all commands work
+   - Clean up checklist file (or keep for reference)
+   - Show summary of what was updated
 
 ## Update Categories
 
@@ -187,6 +213,17 @@ Apply merge? (y/n/preview)
 - Stops on first error with clear diagnostics
 - Easy to identify which change caused issues
 
+## Common Pitfalls to Avoid
+
+### ⚠️ Selective Updates Problem
+**Never cherry-pick files based only on release notes!** This leads to:
+- Missing critical command updates
+- Incomplete feature implementations
+- Broken dependencies between files
+- Users not getting all improvements
+
+**Always use `git diff HEAD upstream/main --name-only`** to get the complete list of changed files, then update ALL relevant files systematically.
+
 ## Error Handling
 
 ### Common Scenarios
@@ -230,43 +267,71 @@ Users can create `.upgrade-rules.json` to specify:
 > /upgrade
 
 🔍 Checking for updates...
-📦 Current version: 0.2.3
-🆕 Latest version: 0.3.1 (3 updates available)
-
-📋 Changes detected:
-✨ 2 new commands: /export-notes, /sync-mobile
-🔧 3 enhanced commands: /thinking-partner, /daily-review, /research-assistant
-🤖 1 new agent: productivity-coach
-📚 Updated templates with new automation features
-⚡ Security updates to dependencies
-
-🤖 Smart merge analysis:
-- thinking-partner: Detected your custom concise style → will preserve + add new features
-- daily-review: Found your custom questions → will merge with new reflection prompts
-- Project Template: Your budget fields + new automation = perfect combination
+📦 Current version: 0.8.2
+🆕 Latest version: 0.8.3
 
 💾 Creating backup to .backup/upgrade-2025-09-13-142030/
 
-Proceed with intelligent upgrade? (y/n/preview) > y
+📋 Creating upgrade checklist...
+Checking system files only (not your personal notes)...
+Found 15 system files with updates available
 
-🎯 Applying smart merges...
-✅ thinking-partner: Merged new video analysis with your style
-✅ daily-review: Combined new prompts with your custom questions
-✅ Added 2 new commands (no conflicts)
-✅ Updated dependencies (5 security fixes)
+Created .upgrade-checklist.md to track updates:
+
+## Commands (8 files)
+[ ] .claude/commands/init-bootstrap.md
+[ ] .claude/commands/release.md
+[ ] .claude/commands/thinking-partner.md
+[ ] .claude/commands/upgrade.md
+[ ] .claude/commands/daily-review.md
+[ ] .claude/commands/inbox-processor.md
+[ ] .claude/commands/research-assistant.md
+[ ] .claude/commands/weekly-synthesis.md
+
+## Settings (1 file)
+[ ] .claude/settings.json
+
+## Core Files (3 files)
+[ ] package.json
+[ ] CHANGELOG.md
+[ ] README.md
+
+## Scripts (3 files)
+[ ] .scripts/vault-stats.sh
+[ ] .scripts/firecrawl-scrape.sh
+[ ] .scripts/setup-mcp.sh
+
+Starting file-by-file review...
+
+📄 File 1/15: .claude/commands/init-bootstrap.md
+   Status: No local changes detected
+   Action: Direct update from upstream
+   [x] Updated
+
+📄 File 2/15: .claude/commands/release.md
+   Status: No local changes detected
+   Action: Direct update from upstream
+   [x] Updated
+
+📄 File 3/15: .claude/settings.json
+   Status: Has local changes (your custom hooks)
+   Showing diff...
+   Action: Merge needed - preserving your hooks, adding new features
+   [x] Merged
+
+[... continues through all files ...]
 
 🎉 Upgrade complete!
-📈 claudesidian 0.2.3 → 0.3.1
+📈 claudesidian 0.8.2 → 0.8.3
 
-🧪 Testing functionality...
-✅ All commands working
-✅ MCP servers connected
-✅ Git repository clean
+✅ Updated: 14 files
+⏭️ Skipped: 1 file (CLAUDE.md - user customization)
 
-New features to try:
-- /export-notes - Export your vault to various formats
-- Enhanced video analysis in /thinking-partner
-- Mobile sync capabilities (see updated README)
+Summary of changes:
+- Fixed init-bootstrap vault selection
+- Improved SessionStart hooks
+- Enhanced user identification prompts
+- Updated all commands to latest versions
 ```
 
 This intelligent upgrade system leverages Claude's semantic understanding to provide the smoothest possible upgrade experience while ensuring no user customizations are lost.
