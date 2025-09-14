@@ -13,12 +13,22 @@ Automate the entire pull request workflow: create branch, stage changes, commit 
    - Check for uncommitted changes to include
    - Verify GitHub CLI (`gh`) is available
    - Get current branch as base branch
+   - If already on feature branch, ask: "Create PR from current branch?"
 
 ### 2. **Create Feature Branch**
    ```bash
    # Generate branch name from PR title or use provided name
+   # Sanitize branch name: lowercase, replace spaces with hyphens, remove special chars
+   branch_name=$(echo "$branch_name" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g' | sed 's/--*/-/g')
+
+   # Check if branch already exists
+   if git show-ref --verify --quiet refs/heads/$branch_name; then
+     echo "Branch $branch_name already exists, using alternative name"
+     branch_name="${branch_name}-$(date +%s)"
+   fi
+
    # Format: feature/short-description or fix/issue-name
-   git checkout -b feature/[branch-name]
+   git checkout -b $branch_name
    ```
 
 ### 3. **Stage and Review Changes**

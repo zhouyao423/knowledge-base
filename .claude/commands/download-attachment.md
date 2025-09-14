@@ -17,17 +17,29 @@ Download files from URLs to attachments folder and organize them with descriptiv
 
 You are tasked with downloading files from URLs and organizing them in the Obsidian vault attachments folder.
 
-### Step 1: Parse URLs
+### Step 1: Parse and Validate URLs
 Extract the URL(s) from the user's input. Handle multiple URLs if provided.
+- **Validate URL scheme**: Only allow http:// or https:// URLs
+- **Reject invalid URLs**: file://, ftp://, or malformed URLs
+- **Example validation**:
+```bash
+if [[ ! "$url" =~ ^https?:// ]]; then
+  echo "Error: Only HTTP/HTTPS URLs are allowed"
+  exit 1
+fi
+```
 
 ### Step 2: Download Files
 For each URL:
 ```bash
-# Create temp filename based on URL
-# Use wget or curl to download
-wget -O "05_Attachments/[filename]" "[url]"
+# Sanitize filename to prevent path traversal
+# Remove ../ and other dangerous characters
+filename=$(basename "$url" | sed 's/[^a-zA-Z0-9._-]/_/g')
+
+# Use wget or curl to download with timeout
+wget --timeout=30 -O "05_Attachments/$filename" "$url"
 # or
-curl -L "[url]" -o "05_Attachments/[filename]"
+curl --max-time 30 -L "$url" -o "05_Attachments/$filename"
 ```
 
 ### Step 3: Verify Downloads
