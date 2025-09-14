@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2025-01-14
+
+### Added
+- Enhanced upgrade command documentation with detailed usage examples and safety features
+- Contributing section with guidelines for community contributions
+- MIT license file for clear open-source licensing
+
+### Changed
+- Improved documentation clarity on Claude Code commands vs agents distinction
+- Updated contributing guidelines to encourage PRs for commands, agents, and core updates
+
+### Removed
+- Removed thinking-partner agent (keeping slash command only)
+
 ## [0.8.8] - 2025-01-13
 
 ### Fixed
@@ -219,8 +233,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - de-ai-ify - Remove AI writing patterns
   - add-frontmatter - Add metadata to notes
   - init-bootstrap - Interactive setup wizard
-- Claude Code agents:
-  - thinking-partner agent for exploration and brainstorming
+- Claude Code agents for specialized workflows
 - Helper scripts:
   - firecrawl-batch.sh - Batch web scraping
   - firecrawl-scrape.sh - Single URL scraping
@@ -242,7 +255,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.8...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.8...v0.9.0
 [0.8.8]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.7...v0.8.8
 [0.8.7]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.6...v0.8.7
 [0.8.6]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.5...v0.8.6

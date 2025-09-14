@@ -159,7 +159,7 @@ and create a synthesis of the key themes and insights?
 Pre-configured AI assistants ready to use:
 
 - `thinking-partner` - Explore ideas through questions
-- `inbox-processor` - Organize your captures  
+- `inbox-processor` - Organize your captures
 - `research-assistant` - Deep dive into topics
 - `daily-review` - End of day reflection
 - `weekly-synthesis` - Find patterns in your week
@@ -170,7 +170,37 @@ Pre-configured AI assistants ready to use:
 
 Run with: `/[command-name]` in Claude Code
 
-**Stay Updated**: Claudesidian automatically checks for updates when you start Claude Code and will remind you to run `/upgrade` when new features are available.
+### Staying Updated with `/upgrade`
+
+Claudesidian automatically checks for updates when you start Claude Code and will remind you to run `/upgrade` when new features are available.
+
+The upgrade command intelligently merges new features while preserving your customizations:
+
+```bash
+# Preview what would be updated (recommended first)
+/upgrade check
+
+# Run the interactive upgrade
+/upgrade
+
+# Skip confirmations for safe updates (advanced)
+/upgrade force
+```
+
+**What the upgrade does:**
+- Creates a timestamped backup before making any changes
+- Shows you diffs for each file before updating
+- Preserves your personal notes and customizations
+- Only updates system files (commands, agents, scripts)
+- Never touches your content folders (00_Inbox, 01_Projects, etc.)
+- Provides rollback capability if needed
+
+**Safety features:**
+- All your personal content is protected
+- Complete backup created in `.backup/upgrade-[timestamp]/`
+- File-by-file review and confirmation
+- Progress tracked in `.upgrade-checklist.md`
+- Can be stopped and resumed at any time
 
 ## Vision & Document Analysis (Optional)
 
@@ -229,18 +259,9 @@ Best practices:
 4. Use Termius or similar SSH client on mobile
 5. Run Claude Code remotely
 
-### Custom Agents
+### Custom Commands
 
-Create specialized agents by saving instructions:
-
-**Thinking Partner** (`06_Metadata/Agents/thinking-partner.md`):
-```markdown
-You are a collaborative thinking partner.
-- Ask clarifying questions
-- Help explore connections
-- Track insights in a running log
-- Never jump to solutions too quickly
-```
+Create specialized commands by saving instructions in `.claude/commands/`:
 
 **Research Assistant** (`06_Metadata/Agents/research-assistant.md`):
 ```markdown
@@ -312,10 +333,53 @@ This setup is based on key principles:
 
 ## Contributing
 
-This is a living template. As you develop workflows that work for you:
-1. Document them in `06_Metadata/Reference/`
-2. Share back with the community
-3. Remember: best practices emerge from use, not theory
+We welcome contributions from the community! This is a living template that gets better with everyone's input.
+
+### How to Contribute
+
+1. **Fork the repository** on GitHub
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Make your changes**
+4. **Test your changes** to ensure everything works
+5. **Commit your changes** (`git commit -m 'Add amazing feature'`)
+6. **Push to the branch** (`git push origin feature/amazing-feature`)
+7. **Open a Pull Request** with a clear description of what you've done
+
+### What We're Looking For
+
+- **New commands**: Useful Claude Code commands for common workflows
+- **New agents**: Specialized agents for specific tasks
+- **Documentation improvements**: Better explanations, examples, or guides
+- **Bug fixes**: Found something broken? Fix it!
+- **Workflow templates**: Share your productive workflows
+- **Helper scripts**: Automation tools that make vault management easier
+- **Integration guides**: Connect Claudesidian with other tools
+- **Core updates**: Improvements to the upgrade system, setup wizard, or other core features
+
+### Guidelines
+
+- Keep commands focused and single-purpose
+- Write clear documentation with examples
+- Test thoroughly before submitting
+- Follow existing code style and structure
+- Update the CHANGELOG.md with your changes
+
+### Getting Updates
+
+When new features are contributed and merged, users can easily get them with:
+```bash
+/upgrade
+```
+
+The upgrade command intelligently merges new features while preserving your personal customizations, making it easy to benefit from community contributions without losing your work.
+
+### Questions or Ideas?
+
+- Open an issue to discuss major changes before starting work
+- Join discussions in existing issues
+- Share your use cases - they help us understand needs better
+
+Remember: best practices emerge from use, not theory. Your real-world experience makes this better for everyone!
 
 ## Resources
 
