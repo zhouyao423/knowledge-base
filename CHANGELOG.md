@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.3] - 2025-01-13
+
+### Fixed
+- Improved init-bootstrap vault selection for multiple vaults
+- Added explicit confirmation before importing any vault
+- Enhanced user identification prompts with better explanations
+- Added disambiguation prompts to find the right person when researching
+- Clear instructions to never proceed without explicit vault confirmation
+
 ## [0.8.2] - 2025-01-13
 
 ### Fixed
@@ -194,7 +203,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.2...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.3...HEAD
+[0.8.3]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.2...v0.8.3
 [0.8.2]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.1...v0.8.2
 [0.8.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.7.0...v0.8.0
