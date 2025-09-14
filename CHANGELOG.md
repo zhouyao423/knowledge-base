@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.1] - 2025-01-13
+
+### Changed
+- Updated README with comprehensive feature descriptions including:
+  - Smart vault analysis and pattern detection capabilities
+  - User research and profile building features
+  - Automatic update notification system
+  - Web research capabilities with Firecrawl
+  - Complete list of available commands including /upgrade
+
 ## [0.8.0] - 2025-01-13
 
 ### Added
@@ -177,7 +187,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.1...HEAD
+[0.8.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.5.0...v0.6.0
