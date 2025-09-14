@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2025-01-13
+
+### Added
+- Intelligent vault import that preserves existing structure in OLD_VAULT folder
+- Auto-detection of existing Obsidian vaults by searching for .obsidian folders
+- User research and disambiguation for personalized setup
+- Automatic detection of file naming patterns and folder organization
+- Vault configuration saved to .claude/vault-config.json for future reference
+- Educational explanations during each setup step
+- Support for both pnpm and npm package managers
+- Comprehensive Obsidian file copying (plugins, trash, settings)
+- Clear examples for folder naming when cloning repository
+
+### Changed
+- init-bootstrap now imports entire vault structure safely without data loss
+- Gemini Vision and Firecrawl prompts clarify tools are already included
+- README includes examples of custom folder names when cloning
+- Removed unnecessary questions by detecting patterns automatically
+
 ## [0.5.0] - 2025-01-13
 
 ### Added
@@ -122,7 +141,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.0...v0.3.1
