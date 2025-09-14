@@ -66,11 +66,19 @@ Intelligently upgrades your claudesidian installation by fetching the latest rel
      ```
 
 ### 3. **File-by-File Review**
+
+   **⚠️ CRITICAL IMPLEMENTATION REQUIREMENT:**
+   - **NEVER blindly overwrite files with `cat > file` or `cp`**
+   - **ALWAYS show diffs to the user first**
+   - **ALWAYS ask for confirmation before replacing files**
+   - **Skipping these steps can lose user customizations!**
+
    For EACH file in the checklist:
    1. Read current checklist status from `.upgrade-checklist.md`
-   2. Show the diff between local and .tmp/claudesidian-upgrade/ version:
+   2. **MANDATORY: Show the diff between local and upstream**:
       ```bash
-      diff current/file .tmp/claudesidian-upgrade/file
+      # ALWAYS show this to the user!
+      diff -u current/file .tmp/claudesidian-upgrade/file
       ```
    3. Determine update strategy:
       - **No local changes**: Direct replace from upstream
@@ -310,6 +318,56 @@ Users can create `.upgrade-rules.json` to specify:
 /upgrade agents-only      # Update just agents
 /upgrade scripts-only     # Update just scripts
 /upgrade deps-only        # Update just dependencies
+```
+
+## CORRECT Implementation Example
+
+**THIS is how the upgrade should work:**
+
+```bash
+📄 File 1/3: .claude/commands/release.md
+
+# Step 1: ALWAYS show the diff first
+Checking for differences...
+
+--- .claude/commands/release.md
++++ .tmp/claudesidian-upgrade/.claude/commands/release.md
+@@ -58,6 +58,11 @@
+
+ ### Semantic Versioning (MAJOR.MINOR.PATCH)
+
++**Quick Decision Guide:**
++- Can users do something they couldn't do before? → **MINOR**
++- Did something that worked break? → **MAJOR** (if breaking) or **PATCH** (if fixing)
++- Did something that worked get better? → **PATCH**
++
+ **MAJOR** (1.0.0 → 2.0.0):
+
+# Step 2: Ask user what to do
+This file has updates available. What would you like to do?
+
+1. Apply update (take upstream version)
+2. Keep your version (skip this update)
+3. View full diff again
+4. Try to merge changes (AI-assisted)
+
+Your choice (1-4): 1
+
+Applying update...
+[x] Updated .claude/commands/release.md
+```
+
+**WRONG Implementation (what happened in the test):**
+
+```bash
+📄 File 1/3: .claude/commands/release.md
+
+# NO DIFF SHOWN - WRONG!
+# Just blindly overwrites:
+Bash(cat .tmp/claudesidian-upgrade/.claude/commands/release.md > .claude/commands/release.md)
+
+# No user confirmation - WRONG!
+# Could lose customizations!
 ```
 
 ## Example Session
