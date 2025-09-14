@@ -47,9 +47,15 @@ Automates the entire release process: analyzes recent commits to determine versi
    - Push commits: `git push`
    - Push tags: `git push --tags`
 
-5. **Provide Next Steps**
-   - Show link to create GitHub release
-   - Remind to add release notes from changelog
+5. **Create GitHub Release**
+   - Use `gh release create` to publish the release automatically
+   - Extract the version section from CHANGELOG.md for release notes
+   - Include the "Generated with Claude Code" footer
+   - This ensures the release is visible in GitHub's releases page
+
+6. **Provide Confirmation**
+   - Show the GitHub release URL
+   - Confirm successful publication
 
 ## Version Bump Rules
 
@@ -140,13 +146,11 @@ claude run release major
 # ✅ Committed changes
 # ✅ Created tag v0.2.0
 # ✅ Pushed to GitHub
+# ✅ Created GitHub release
 #
 # 🎉 Release v0.2.0 complete!
 #
-# Next steps:
-# 1. Go to https://github.com/user/repo/releases/new?tag=v0.2.0
-# 2. Add release notes from CHANGELOG.md
-# 3. Publish the release
+# GitHub Release: https://github.com/user/repo/releases/tag/v0.2.0
 ```
 
 ## Error Handling
