@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.1] - 2025-01-14
+
+### Changed
+- Enhanced Gemini Vision documentation to explain direct image/PDF processing benefits
+- Enhanced Firecrawl documentation to explain full-text capture and context preservation
+- Added detailed API key setup instructions for both Gemini and Firecrawl
+
+### Removed
+- Removed Essential Workflows section from README (redundant with command descriptions)
+
 ## [0.9.0] - 2025-01-14
 
 ### Added
@@ -255,7 +265,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.9.1...HEAD
+[0.9.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.8...v0.9.0
 [0.8.8]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.7...v0.8.8
 [0.8.7]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.6...v0.8.7

@@ -123,37 +123,6 @@ claudesidian/
 - Completed projects with their outputs
 - Old notes no longer relevant
 
-## Essential Workflows
-
-### Starting a Research Project
-
-1. Create project folder:
-```bash
-mkdir -p "01_Projects/My_New_Project/{Research,Chats,Daily_Progress}"
-```
-
-2. Tell Claude Code:
-```
-I'm starting a project on [topic] in 01_Projects/My_New_Project.
-I'm in thinking mode. Help me explore this topic.
-```
-
-3. Let Claude search your vault and ask clarifying questions
-
-### Daily Capture
-
-1. Create a daily note in `00_Inbox/`
-2. Dump thoughts, links, ideas throughout the day
-3. Weekly: Process inbox items to appropriate folders
-
-### Synthesizing Research
-
-Ask Claude Code:
-```
-Can you review all notes in [project folder] 
-and create a synthesis of the key themes and insights?
-```
-
 ## Claude Code Commands
 
 Pre-configured AI assistants ready to use:
@@ -204,24 +173,50 @@ The upgrade command intelligently merges new features while preserving your cust
 
 ## Vision & Document Analysis (Optional)
 
-With Gemini MCP configured, you can:
-- Analyze images and screenshots
-- Extract text from PDFs
-- Compare multiple images
-- Generate smart filenames
-- Process documents
+With [Google Gemini](https://ai.google.dev/) MCP configured, Claude Code can process your attachments directly without having to describe them. This means:
+- **Direct image analysis**: Claude sees the actual image, not your description
+- **PDF text extraction**: Full document text without copy-pasting
+- **Bulk processing**: Analyze multiple screenshots or documents at once
+- **Smart organization**: Auto-generate filenames based on image content
+- **Comparison tasks**: Compare before/after screenshots, designs, etc.
 
-See `.claude/mcp-servers/README.md` for setup
+**Why this matters**: Instead of describing "a screenshot showing an error message", Claude Code directly sees and reads the error. Perfect for debugging UI issues, analyzing charts, or processing scanned documents.
+
+**Getting a Gemini API key:**
+1. Visit [Google AI Studio](https://aistudio.google.com)
+2. Sign in with your Google account
+3. Click "Get API key" in the left sidebar
+4. Create a new API key (it's free!)
+5. Set it in your environment: `export GEMINI_API_KEY="your-key-here"`
+
+See `.claude/mcp-servers/README.md` for full setup instructions
 
 ## Web Research (Optional)
 
-With Firecrawl configured, you can save web content directly to your vault:
-- Save entire articles as markdown
-- Preserve content permanently
-- Make web research searchable
-- Build a research library
+With [Firecrawl](https://www.firecrawl.dev/) configured, our helper scripts fetch and save full web content directly to your vault. This means:
+- **Full text capture**: Scripts pipe complete article text to files, not summaries
+- **Context preservation**: Claude doesn't need to hold web content in memory
+- **Batch processing**: Save multiple articles at once with `firecrawl-batch.sh`
+- **Clean markdown**: Web pages converted to readable, searchable markdown
+- **Permanent archive**: Your research stays in your vault forever
 
-Tell Claude: "Save this article to my vault: [URL]" and it's done!
+**Why this matters**: Instead of Claude reading a webpage and summarizing it (losing detail), the scripts save the FULL text. Claude can then search and analyze thousands of saved articles without hitting context limits. Perfect for research projects, documentation archives, or building a knowledge base.
+
+**Example workflow:**
+```bash
+# Save a single article
+./scripts/firecrawl-scrape.sh "https://example.com/article" "03_Resources/Articles"
+
+# Batch save multiple URLs
+./scripts/firecrawl-batch.sh urls.txt "03_Resources/Research"
+```
+
+**Getting a Firecrawl API key:**
+1. Visit [Firecrawl](https://www.firecrawl.dev) and sign up
+2. Get 300 free credits to start (open-source, can self-host)
+3. Go to your dashboard to find your API key
+4. Copy the key (format: `fc-xxxxx...`)
+5. Set it in your environment: `export FIRECRAWL_API_KEY="fc-your-key-here"`
 
 ## Helper Scripts
 
