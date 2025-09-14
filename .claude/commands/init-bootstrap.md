@@ -23,6 +23,7 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 ## Process
 
 1. **Initial Environment Setup**
+   - Get current date with `date` command for timestamps
    - Check current folder name and ask if they want to rename it
    - If yes, guide them through renaming (handle parent directory move)
    - Check for package.json and install dependencies:
@@ -33,7 +34,7 @@ Then generate a customized CLAUDE.md file tailored to their needs.
      - If no .git folder: Initialize git repository
      - If has remote origin: Remove it to disconnect from claudesidian
      - If clean local repo: Ready to go
-   - Create base folder structure (00_Inbox through 06_Metadata)
+   - Don't create folders yet - wait until after asking about organization method
 
 2. **Check Existing Configuration**
    - Look for existing CLAUDE.md
@@ -46,16 +47,23 @@ Then generate a customized CLAUDE.md file tailored to their needs.
    - If found, ask: "Found Obsidian vault at [path]. Is this the vault you want to import?"
    - Count files correctly: `find [path] -type f -name "*.md" | wc -l` (no depth limit)
    - Show vault size: `du -sh [path]`
-   - Analyze file naming patterns: check for dates (YYYY-MM-DD), kebab-case, Title Case, etc.
-   - Detect folder organization: PARA, Zettelkasten, custom structure
-   - Check for daily notes pattern, templates folder, attachments location
+   - If confirmed, analyze vault structure:
+     - Run `tree -L 3 -d [path]` to see folder hierarchy
+     - Sample 10-15 random notes to understand content types
+     - List 30-50 recent file names to detect naming patterns
+     - Check for daily notes folder and format
+     - Identify most active folders by file count
+     - Detect if using PARA, Zettelkasten, Johnny Decimal, or custom
    - If not the right one or none found, ask for path to existing vault
    - If no existing vault, they're starting fresh
 
 4. **Ask Configuration Questions**
    - "What's your name?" (for personalization)
    - "Would you like me to research your public work to better understand your context?"
-     - If yes: Search and show findings, ask "Is this you?" to disambiguate
+     - If yes: Search for information
+     - ALWAYS show findings and ask "Is this correct?" for confirmation
+     - If multiple people found, list them numbered for selection
+     - If wrong person, offer to search again or skip
      - Save relevant context about their work, writing style, areas of expertise
    - "Do you follow the PARA method or have a different organization system?"
    - "What are your main use cases? (research, writing, project management, knowledge base, daily notes)"
@@ -68,9 +76,9 @@ Then generate a customized CLAUDE.md file tailored to their needs.
    - "Any projects you recently completed?" (Can archive with summaries)
 
    **General preferences:**
-   - "Do you use any specific plugins or tools with Obsidian?"
+   - Check .obsidian/community-plugins.json to see what plugins they use
    - Analyze existing files to detect naming convention automatically
-   - "Do you work with attachments frequently? (images, PDFs, etc.)"
+   - Check for attachments folder to see if they work with media files
    - "Do you use git for version control?"
    - "Any specific websites or resources you reference often?"
    - "Do you have any specific writing style preferences?"
@@ -81,8 +89,9 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 5. **Optional Tool Setup**
 
    **Gemini Vision (already included)**
-   - Ask: "Gemini Vision is already included for analyzing images, PDFs, and videos. Would you like to activate it?"
+   - Ask: "Gemini Vision is already included for analyzing images, PDFs, and videos. Would you like to activate it? (yes/no/later)"
    - Explain: "You just need a free API key from Google. This lets Claude analyze any visual content in your vault."
+   - If later: "No problem! You can set it up anytime by running `/setup-gemini`"
    - If yes:
      - Guide to get API key from https://aistudio.google.com/apikey (free, takes 30 seconds)
      - Help add to shell profile (.zshrc, .bashrc, etc.)
@@ -91,20 +100,34 @@ Then generate a customized CLAUDE.md file tailored to their needs.
      - Test the connection with a sample command
 
    **Firecrawl (already included)**
-   - Ask: "Firecrawl scripts are included for saving web content. Would you like to set them up?"
-   - Explain: "This lets you save entire websites as markdown. You just need a free API key from firecrawl.dev"
+   - Ask: "Firecrawl is included for web research. Would you like to set it up? (yes/no/later)"
+   - Explain: "This is a game-changer for research! When you find an article or website, you can save it directly to your vault as markdown - preserving the content forever, making it searchable, and letting Claude analyze it. Perfect for building a research library."
+   - Example: "Just tell Claude: 'Save this article to my vault: [URL]' and it's done!"
+   - If later: "You can set it up anytime by running `/setup-firecrawl`"
    - If yes:
      - Guide to get API key from https://firecrawl.dev (free tier available)
      - Help configure the scripts in .scripts/
      - Show example usage: `.scripts/firecrawl-scrape.sh https://example.com`
 
 6. **Generate Custom Configuration**
+   - Get current date: `date +"%B %d, %Y"` for the CLAUDE.md header
    - Save preferences to `.claude/vault-config.json`:
      ```json
      {
        "user": {
          "name": "Jane Smith",
-         "context": "Tech writer, founder of XYZ startup, author of...",
+         "background": {
+           "companies": ["Variance", "Percolate"],
+           "roles": ["Co-founder", "Writer"],
+           "publications": ["Why Is This Interesting?", "every.to"],
+           "expertise": ["Developer tools", "Marketing tech", "Systems thinking"],
+           "interests": ["AI for thinking", "Note-taking systems", "Creativity"]
+         },
+         "profileSources": [
+           "https://whyisthisinteresting.com/about",
+           "https://every.to/@username"
+         ],
+         "customContext": "Focuses on AI as thinking augmentation, not just writing",
          "publicProfile": true
        },
        "vaultPath": "/path/to/existing/vault",
@@ -117,7 +140,8 @@ Then generate a customized CLAUDE.md file tailored to their needs.
        },
        "projects": ["Book - Productivity", "SaaS App"],
        "areas": ["Newsletter", "Health"],
-       "importedAt": "2025-01-13"
+       "importedAt": "2025-01-13",
+       "lastUpdated": "2025-01-13"
      }
      ```
    - Start with CLAUDE-BOOTSTRAP.md as base
@@ -181,7 +205,8 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 ```markdown
 # Your Obsidian Vault Configuration
 
-Generated on: [Date]
+Generated on: [Run `date +"%B %d, %Y"` to get current date]
+Last updated: [Same date]
 Based on your preferences for: [main use cases]
 Setup completed with: ✅ Dependencies ✅ Folder structure ✅ Git initialized
 
@@ -267,6 +292,8 @@ Setup completed with: ✅ Dependencies ✅ Folder structure ✅ Git initialized
 User: claude run init-bootstrap
 Assistant: Welcome! I'll help you set up your personalized Obsidian + Claude configuration.
 
+📅 Today's date: [Gets from `date +"%B %d, %Y"`]
+
 First, let me check your setup...
 
 📁 **Folder Name Check**
@@ -287,9 +314,9 @@ Now setting up your environment...
 [Removes git remote to disconnect from original]
 *Why: This ensures you won't accidentally push your personal notes to the public repo*
 
-📂 **Creating PARA Folder Structure**
-[Creates folders: 00_Inbox through 06_Metadata]
-*Why: PARA method helps organize your knowledge into Projects, Areas, Resources, and Archive*
+📂 **Creating Folder Structure**
+[Creates folders based on your chosen organization method]
+*Why: A good structure helps you organize and find your knowledge effectively*
 
 🎯 **Finalizing Setup**
 [Checks git status and removes first-run marker]
@@ -308,11 +335,36 @@ Now let me ask you a few questions to customize your setup:
 
 Found Obsidian vault at: ~/Documents/MyNotes
 📊 Vault stats: 2,517 markdown files, 1.1GB total size
-Is this the vault you'd like to import? (yes/no/different path)
+Would you like to import this vault?
+- **yes** - Import this vault
+- **no** - Search for a different vault
+- **skip** - Start fresh without importing
+- **path** - Specify a different path manually
 
 User: yes
 
-Great! I'll help you import your existing notes into the PARA structure.
+Great! I'll import your vault to OLD_VAULT/ where it will be safely preserved. You can migrate files to the PARA folders at your own pace.
+
+📦 **Analyzing your vault structure...**
+[Running tree to see folder hierarchy]
+[Sampling notes to understand content]
+[Detecting naming patterns from recent files]
+
+I can see you're using:
+- A modified PARA structure with custom folders
+- Date-prefixed files for daily notes (YYYY-MM-DD)
+- Project folders with nested research
+- Heavy use of the Resources folder for reference material
+
+📦 **Importing your vault...**
+[Copying files to OLD_VAULT/]
+[Preserving .obsidian settings]
+[Checking for plugin folders]
+
+✅ Imported 2,517 files (1.1GB) to OLD_VAULT/
+Your original structure is completely preserved!
+
+Now let's personalize your setup:
 
 1. **What's your name?** (This helps me personalize your experience)
 
@@ -326,15 +378,44 @@ User: Yes
 [Searches for information]
 
 I found several Noah Briers online:
-- Noah Brier, co-founder of Variance and Percolate, writer at every.to
-- Noah Brier, photographer based in Portland
-- Noah Brier, data scientist at Microsoft
+1. Noah Brier, co-founder of Variance and Percolate, writer at every.to
+2. Noah Brier, photographer based in Portland
+3. Noah Brier, data scientist at Microsoft
 
-Which one is you? (or none of these)
+Which describes you?
+- Enter **1-3** to select
+- **none** - None of these are me
+- **search** - Try searching with more details
+- **skip** - Don't research me
 
-User: The first one - Variance and Percolate
+User: 1
 
-Great! I see you write about technology, creativity, and building products. I'll keep this context in mind.
+Great! I found you - co-founder of Variance and Percolate, writer at every.to.
+
+**Building Your Profile**
+Would you like me to read any specific pages to better understand your work?
+- Your personal website or blog
+- Recent articles or papers you've written
+- Company/project pages
+- LinkedIn or other profiles
+
+Enter URLs (comma-separated) or 'skip' to continue:
+
+User: https://whyisthisinteresting.com/about, https://every.to/@noahbrier
+
+[Fetches and analyzes the provided URLs]
+
+I've built a comprehensive profile:
+- You co-founded Variance (developer tools) and Percolate (marketing software)
+- You write Why Is This Interesting? newsletter with Colin Nagy
+- You explore creativity, technology, and systems thinking
+- You've written about writing as thinking, note-taking systems, and AI
+
+Is there anything else I should know about your work or interests?
+
+User: I'm really interested in how AI can augment thinking, not just writing
+
+Got it! I'll remember that you focus on AI as a thinking tool, not just a writing assistant.
 
 3. **What will you primarily use this vault for?**
    (research, writing, project management, daily notes, knowledge base, or combination?)
@@ -380,9 +461,20 @@ Assistant: Setting up resource folders for:
 **Gemini Vision Setup**
 Gemini Vision is already included in claudesidian! It can analyze images, PDFs, and videos in your vault.
 To activate it, you just need a free Google API key (takes 30 seconds).
-Would you like to set it up now?
+Would you like to set it up now? (yes/no/later)
 
-User: Yes, that sounds useful
+User: later
+
+No problem! You can set it up anytime by running `/setup-gemini` when you're ready.
+
+**Firecrawl Setup**
+Firecrawl is a game-changer for research! Save any article or website directly to your vault as markdown.
+Perfect for building a permanent, searchable research library.
+Would you like to set it up? (yes/no/later)
+
+User: yes
+
+Great choice! Firecrawl will transform how you collect research.
 
 Assistant: Excellent! Here's how to get your API key:
 1. Go to https://aistudio.google.com/apikey
