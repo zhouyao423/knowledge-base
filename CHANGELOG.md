@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2025-01-13
+
+### Added
+- Comprehensive vault analysis using tree, note sampling, and pattern detection
+- Enhanced profile building with URL fetching and custom context
+- Dynamic date generation for timestamps in CLAUDE.md
+- "Later" option for Gemini Vision and Firecrawl setup
+- Multiple vault import options (yes/no/skip/path)
+- Deeper research capabilities with disambiguation confirmation
+
+### Changed
+- init-bootstrap now analyzes vault structure before importing
+- Always confirms user identity even with single search result
+- Waits to create folders until after organization method selection
+- Detects plugins and attachments automatically instead of asking
+- Firecrawl presented as research game-changer with better explanation
+- Profile building includes comprehensive background from provided URLs
+
+### Fixed
+- Correct file counting without depth limits
+- Proper ordering of import before personalization questions
+- More accurate detection of user preferences from existing vault
+
 ## [0.6.0] - 2025-01-13
 
 ### Added
@@ -141,7 +164,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.3.1...v0.4.0
