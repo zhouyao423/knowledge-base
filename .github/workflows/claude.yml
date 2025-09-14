@@ -13,17 +13,20 @@ on:
 jobs:
   claude:
     if: |
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
-      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+      (github.actor == 'heyitsnoah' || github.actor == 'dependabot[bot]') &&
+      (
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+        (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+      )
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      pull-requests: read
-      issues: read
+      contents: write      # Allow Claude to push changes
+      pull-requests: write  # Allow Claude to create/modify PRs
+      issues: write        # Allow Claude to create/update issues
       id-token: write
-      actions: read # Required for Claude to read CI results on PRs
+      actions: read        # Required for Claude to read CI results on PRs
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -40,11 +43,39 @@ jobs:
           additional_permissions: |
             actions: read
 
+          # Allow Claude to run specific tools and commands
+          allowed_tools: |
+            Bash(pnpm install)
+            Bash(pnpm setup)
+            Bash(pnpm attachments:*)
+            Bash(pnpm vault:stats)
+            Bash(pnpm check-updates)
+            Bash(npm run *)
+            Bash(git status)
+            Bash(git diff *)
+            Bash(git log *)
+            Bash(git add *)
+            Bash(git commit *)
+            Bash(git push)
+            Bash(gh pr *)
+            Bash(gh issue *)
+            Bash(ls *)
+            Bash(cat *)
+            Bash(grep *)
+            Bash(find *)
+            View
+            GlobTool
+            GrepTool
+            BatchTool
+            Read
+            Write
+            Edit
+
           # Optional: Give a custom prompt to Claude. If this is not specified, Claude will perform the instructions specified in the comment that tagged it.
           # prompt: 'Update the pull request description to include a summary of changes.'
 
           # Optional: Add claude_args to customize behavior and configuration
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.anthropic.com/en/docs/claude-code/sdk#command-line for available options
-          # claude_args: '--model claude-opus-4-1-20250805 --allowed-tools Bash(gh pr:*)'
+          # claude_args: '--model claude-opus-4-1-20250805'
 
