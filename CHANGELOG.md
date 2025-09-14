@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.7] - 2025-01-13
+
+### Fixed
+- Release command now automatically creates GitHub release using gh CLI
+- Prevents missing GitHub releases (like v0.8.2-v0.8.5 were)
+- Extracts release notes from CHANGELOG.md for GitHub release body
+
 ## [0.8.6] - 2025-01-13
 
 ### Changed
@@ -227,7 +234,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.6...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.7...HEAD
+[0.8.7]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.6...v0.8.7
 [0.8.6]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.5...v0.8.6
 [0.8.5]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.4...v0.8.5
 [0.8.4]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.3...v0.8.4
