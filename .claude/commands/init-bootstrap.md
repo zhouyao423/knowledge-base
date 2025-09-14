@@ -286,6 +286,26 @@ Setup completed with: ✅ Dependencies ✅ Folder structure ✅ Git initialized
 [✅ First commit made - if git was initialized]
 ```
 
+## Important Implementation Notes
+
+### Handling Multiple Vaults
+
+When multiple vaults are detected:
+1. **Always list all vaults found** with clear numbering and details
+2. **Require explicit selection** - don't assume which vault to use
+3. **Confirm the selection** before proceeding with import
+4. **Handle ambiguous responses** - if user provides unclear input (like pasting a screenshot), ask for clarification:
+   - "I see you've shared a screenshot. Could you please type the number (1-3) of the vault you'd like to import?"
+   - "I need a clear selection. Please type '1', '2', or '3' to choose a vault, or 'skip' to start fresh."
+
+### Never Proceed Without Clear Confirmation
+
+If the user's response is unclear:
+- Don't guess or assume
+- Ask for explicit confirmation
+- Provide clear options again
+- Example: "I want to make sure I import the right vault. Please type the number of your choice (1, 2, or 3)."
+
 ## Interactive Example
 
 ```
@@ -333,6 +353,8 @@ Now let me ask you a few questions to customize your setup:
 🔍 **Searching for existing Obsidian vaults...**
 [Searches ~/Documents, ~/Desktop, ~/, and parent directories]
 
+### Case 1: Single Vault Found
+
 Found Obsidian vault at: ~/Documents/MyNotes
 📊 Vault stats: 2,517 markdown files, 1.1GB total size
 Would you like to import this vault?
@@ -340,6 +362,37 @@ Would you like to import this vault?
 - **no** - Search for a different vault
 - **skip** - Start fresh without importing
 - **path** - Specify a different path manually
+
+User: yes
+
+### Case 2: Multiple Vaults Found
+
+🔍 **Found multiple Obsidian vaults:**
+
+1. **~/Documents/MyNotes** (2,517 files, 1.1GB)
+   - Last modified: 2 hours ago
+   - Contains: Daily notes, projects, resources
+
+2. **~/Desktop/WorkVault** (892 files, 450MB)
+   - Last modified: 3 days ago
+   - Contains: Client projects, meeting notes
+
+3. **~/Documents/ObsidianVault** (156 files, 23MB)
+   - Last modified: 2 weeks ago
+   - Contains: Personal notes, drafts
+
+**Which vault would you like to import?**
+- Enter **1-3** to select a vault
+- **all** - Import all vaults (each to a separate folder)
+- **skip** - Start fresh without importing
+- **path** - Specify a different path manually
+
+User: 1
+
+**Confirming your selection:**
+You selected: ~/Documents/MyNotes (2,517 files, 1.1GB)
+
+Is this correct? (yes/no)
 
 User: yes
 
@@ -366,31 +419,49 @@ Your original structure is completely preserved!
 
 Now let's personalize your setup:
 
-1. **What's your name?** (This helps me personalize your experience)
+1. **What's your name?**
+
+   *Why I'm asking:* I'll use this to personalize your CLAUDE.md file and help me understand your context better. This creates a more tailored experience where I can reference your work and interests naturally.
 
 User: Noah Brier
 
 2. **Would you like me to research your public work?**
-   This helps me better understand your context and tailor the setup to your needs.
+
+   *Why this helps:* By understanding your background, expertise, and interests, I can:
+   - Tailor suggestions to your specific field and workflow
+   - Reference relevant examples from your domain
+   - Better understand the context of your questions
+   - Build a profile that helps me be a more effective thinking partner
 
 User: Yes
 
-[Searches for information]
+Great! To make sure I find information about the real you, could you provide any of these details?
+- Your company or organization
+- Your location (city/country)
+- A unique project you've worked on
+- Your website or social media handle
+- Any other distinguishing information
 
-I found several Noah Briers online:
-1. Noah Brier, co-founder of Variance and Percolate, writer at every.to
-2. Noah Brier, photographer based in Portland
-3. Noah Brier, data scientist at Microsoft
+This helps me avoid confusion with others who share your name.
 
-Which describes you?
-- Enter **1-3** to select
-- **none** - None of these are me
-- **search** - Try searching with more details
-- **skip** - Don't research me
+User: I co-founded Variance and Percolate, I write at every.to
 
-User: 1
+Perfect! Let me search for you with those details...
 
-Great! I found you - co-founder of Variance and Percolate, writer at every.to.
+[Searches for information using the provided identifying information]
+
+Based on your details, I found you - Noah Brier, co-founder of Variance and Percolate, writer at every.to.
+
+Let me confirm this is correct:
+- Co-founded Variance (developer tools) and Percolate (marketing software)
+- Write at every.to and Why Is This Interesting? newsletter
+- Focus on systems thinking, creativity, and technology
+
+Is this you? (yes/no)
+
+User: yes
+
+Excellent! I've identified the right profile.
 
 **Building Your Profile**
 Would you like me to read any specific pages to better understand your work?
