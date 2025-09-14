@@ -205,10 +205,10 @@ With [Firecrawl](https://www.firecrawl.dev/) configured, our helper scripts fetc
 **Example workflow:**
 ```bash
 # Save a single article
-./scripts/firecrawl-scrape.sh "https://example.com/article" "03_Resources/Articles"
+npm run firecrawl:scrape -- "https://example.com/article" "03_Resources/Articles"
 
 # Batch save multiple URLs
-./scripts/firecrawl-batch.sh urls.txt "03_Resources/Research"
+npm run firecrawl:batch -- urls.txt "03_Resources/Research"
 ```
 
 **Getting a Firecrawl API key:**
@@ -277,28 +277,6 @@ You are a research assistant.
 4. **Trust but verify**: Always read AI-generated content
 5. **Break your flow**: AI helps you resume easily
 
-### Common Patterns
-
-**The Daily Review**:
-```
-What new notes were created today?
-What connections can you see between today's work and my existing notes?
-```
-
-**The Weekly Synthesis**:
-```
-Review all notes from this week.
-What are the key themes and insights?
-What questions remain unanswered?
-```
-
-**The Project Retrospective**:
-```
-This project is complete.
-Create a summary of what was learned and accomplished.
-What should be archived vs kept accessible?
-```
-
 ## Troubleshooting
 
 ### Claude Code can't find my notes
@@ -358,6 +336,7 @@ We welcome contributions from the community! This is a living template that gets
 - Test thoroughly before submitting
 - Follow existing code style and structure
 - Update the CHANGELOG.md with your changes
+- **AI-generated content is welcome, but you MUST carefully read and review everything before submitting** - never submit code you don't understand
 
 ### Getting Updates
 

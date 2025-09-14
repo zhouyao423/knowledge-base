@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.2] - 2025-01-14
+
+### Fixed
+- Corrected Firecrawl script examples to use `npm run` commands
+- Added contributing guideline about reviewing AI-generated content before submission
+
+### Removed
+- Removed Common Patterns section from README (redundant)
+
 ## [0.9.1] - 2025-01-14
 
 ### Changed
@@ -265,7 +274,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.9.1...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.9.2...HEAD
+[0.9.2]: https://github.com/heyitsnoah/claudesidian/compare/v0.9.1...v0.9.2
 [0.9.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.8...v0.9.0
 [0.8.8]: https://github.com/heyitsnoah/claudesidian/compare/v0.8.7...v0.8.8
