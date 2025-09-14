@@ -56,17 +56,51 @@ Automates the entire release process: analyzes recent commits to determine versi
 ### Semantic Versioning (MAJOR.MINOR.PATCH)
 
 **MAJOR** (1.0.0 → 2.0.0):
-- Breaking changes
+- Breaking changes that require users to change their code/config
+- Removing features or commands
+- Changing command syntax or behavior incompatibly
 - Commits with "BREAKING CHANGE" in body
 - Commits with "!" after type (e.g., "feat!:")
 
 **MINOR** (1.0.0 → 1.1.0):
-- New features (backward compatible)
-- Commits starting with "feat:"
+- **NEW capabilities** added (not enhancements to existing features)
+- New commands, new tools, new integrations
+- New optional features that don't affect existing functionality
+- Commits starting with "feat:" that add NEW functionality
+- Examples:
+  - Adding a new `/command`
+  - Adding a new MCP server
+  - Adding vault import capability (first time)
 
 **PATCH** (1.0.0 → 1.0.1):
-- Bug fixes and minor changes
-- Commits with "fix:", "docs:", "style:", "refactor:", "test:", "chore:"
+- Bug fixes and minor improvements
+- Enhancements to existing features
+- Performance improvements
+- Documentation updates
+- Refactoring without changing behavior
+- Commits with "fix:", "docs:", "style:", "refactor:", "perf:", "test:", "chore:"
+- Examples:
+  - Making an existing command smarter
+  - Improving error messages
+  - Fixing bugs in existing features
+  - Enhancing existing import to be more intelligent
+
+### Commit Message Best Practices
+
+**Use "feat:" only for NEW features:**
+- ✅ `feat: add vault import capability`
+- ❌ `feat: enhance vault import` (should be `fix:` or `refactor:`)
+
+**Use "fix:" for improvements and corrections:**
+- ✅ `fix: improve vault detection accuracy`
+- ✅ `fix: correct file counting in init-bootstrap`
+
+**Use "refactor:" for code improvements:**
+- ✅ `refactor: enhance profile building with URL fetching`
+- ✅ `refactor: make init-bootstrap questions smarter`
+
+**Use "perf:" for performance improvements:**
+- ✅ `perf: optimize vault analysis for large vaults`
 
 ## Example Usage
 

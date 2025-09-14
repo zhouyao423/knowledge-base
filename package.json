@@ -15,7 +15,8 @@
     "attachments:orphans": "for file in 05_Attachments/*; do basename \"$file\" | xargs -I {} sh -c 'grep -r \"{}\" . --include=\"*.md\" > /dev/null || echo \"{}\"'; done",
     "attachments:recent": "find 05_Attachments -type f -mtime -7 -exec ls -la {} \\;",
     "attachments:create-organized": "mkdir -p 05_Attachments/Organized",
-    "vault:stats": ".scripts/vault-stats.sh"
+    "vault:stats": ".scripts/vault-stats.sh",
+    "check-updates": "REMOTE=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep version | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && LOCAL=$(grep version package.json | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && if [ \"$LOCAL\" != \"$REMOTE\" ]; then echo \"{\\\"hookSpecificOutput\\\":{\\\"hookEventName\\\":\\\"SessionStart\\\",\\\"additionalContext\\\":\\\"📦 Update available! Latest: $REMOTE (you have: $LOCAL)\\\\nRun /upgrade to update.\\\"}}\"; fi"
   },
   "keywords": [
     "obsidian",
