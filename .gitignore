@@ -26,5 +26,8 @@ node_modules/
 .node_modules/
 pnpm-lock.yaml
 
+# Temporary directories
+.tmp/
+
 # Never commit real API keys
 *_API_KEY

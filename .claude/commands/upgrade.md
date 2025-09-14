@@ -22,16 +22,23 @@ Intelligently upgrades your claudesidian installation by fetching the latest rel
 
 ### 1. **Version Check & Setup**
    - Get current version from package.json
-   - Fetch latest release from GitHub (heyitsnoah/claudesidian)
    - Create timestamped backup in `.backup/upgrade-YYYY-MM-DD-HHMMSS/`
-   - Fetch upstream changes: `git fetch upstream --tags`
+   - Clone latest claudesidian to temp directory (doesn't affect user's repo):
+     ```bash
+     # Get fresh copy in .tmp dir (hidden from Obsidian) - user's repo stays disconnected
+     git clone --depth=1 --branch=main https://github.com/heyitsnoah/claudesidian.git .tmp/claudesidian-upgrade
+     ```
+   - Now we have latest version to compare against
 
 ### 2. **Create Upgrade Checklist**
-   - Get list of SYSTEM files that need checking (NOT user content):
+   - Compare system files between current directory and .tmp/claudesidian-upgrade/:
      ```bash
-     # Only check claudesidian system files, not user notes
-     git diff HEAD upstream/main --name-only | grep -E '^(\.claude/|\.scripts/|package\.json|CHANGELOG\.md|README\.md|\.gitignore)'
+     # Find all system files that differ
+     diff -qr . .tmp/claudesidian-upgrade/ --include="*.md" --include="*.sh" --include="*.json" |
+     grep -E '(\.claude/|\.scripts/|package\.json|CHANGELOG\.md|README\.md)' |
+     grep -v '(00_|01_|02_|03_|04_|05_|06_|\.obsidian|CLAUDE\.md)'
      ```
+   - Create checklist of files that need review
    - Explicitly EXCLUDE:
      - User content folders (00_Inbox, 01_Projects, etc.)
      - User's CLAUDE.md (their personalized version)
@@ -60,14 +67,33 @@ Intelligently upgrades your claudesidian installation by fetching the latest rel
 
 ### 3. **File-by-File Review**
    For EACH file in the checklist:
-   1. Show the diff: `git diff HEAD upstream/main -- [file]`
-   2. Determine update strategy:
-      - **Direct replace**: Commands, agents, scripts with no user changes
-      - **Skip**: User's CLAUDE.md, vault-config.json, .mcp.json
-      - **Merge needed**: Files with both upstream and user changes
-   3. Apply the update
-   4. Mark complete in checklist: `[x]`
-   5. Move to next file
+   1. Read current checklist status from `.upgrade-checklist.md`
+   2. Show the diff between local and .tmp/claudesidian-upgrade/ version:
+      ```bash
+      diff current/file .tmp/claudesidian-upgrade/file
+      ```
+   3. Determine update strategy:
+      - **No local changes**: Direct replace from upstream
+      - **Never update**: User's CLAUDE.md, vault-config.json, .mcp.json
+      - **Local changes detected**: Ask user:
+        ```
+        File: .claude/commands/thinking-partner.md has local modifications
+
+        Options:
+        1. Keep your version (skip update)
+        2. Take upstream version (lose your changes)
+        3. View diff and decide
+        4. Try to merge both (AI-assisted)
+
+        Choice (1/2/3/4): _
+        ```
+   4. Apply the chosen strategy
+   5. **CRITICAL: Update the checklist file immediately**:
+      ```markdown
+      [ ] .claude/commands/init-bootstrap.md  → becomes →  [x] .claude/commands/init-bootstrap.md
+      ```
+   6. Save `.upgrade-checklist.md` after EVERY file update
+   7. Move to next file
 
 ### 4. **Update Types**
    - **Safe to replace**: `.claude/commands/*.md`, `.claude/agents/*.md`, `.scripts/*`
@@ -75,15 +101,40 @@ Intelligently upgrades your claudesidian installation by fetching the latest rel
    - **Never touch**: User content folders, CLAUDE.md, API configs
 
 ### 5. **Progress Tracking**
+   - Use TodoWrite tool to track progress alongside the checklist
    - Save progress after each file in `.upgrade-checklist.md`
+   - **MUST mark items in checklist**:
+     - `[x]` = completed
+     - `[-]` = skipped (user customization)
+     - `[ ]` = still pending
    - If interrupted, can resume from where you left off
    - Show progress: "Updating file 5 of 23..."
    - Clear indication of what's been done and what's remaining
 
-### 6. **Final Steps**
+### 6. **Verification Check**
+   - Re-check all system files against the checklist
+   - Compare with checklist to identify:
+     - Files marked `[ ]` pending = likely missed (problem)
+     - Files marked `[-]` skipped = intentionally kept different (fine)
+     - Files marked `[x]` updated but still in diff = merge issues or user edits (review)
+   - Show verification results:
+     ```
+     ✅ All required files updated successfully
+     ℹ️ 2 files intentionally kept with user customizations:
+     - .claude/commands/thinking-partner.md (user's concise style)
+     - package.json (user's custom scripts preserved)
+     - or -
+     ⚠️ Warning: 2 files appear to be missed (still marked pending):
+     - .claude/commands/release.md
+     - .scripts/vault-stats.sh
+     ```
+   - Only flag as problem if files are still marked `[ ]` pending in checklist
+
+### 7. **Final Steps**
    - Update version in package.json
    - Verify all commands work
-   - Clean up checklist file (or keep for reference)
+   - Clean up temp directory: `rm -rf .tmp/claudesidian-upgrade`
+   - Save final checklist for reference (shows what was updated vs skipped)
    - Show summary of what was updated
 
 ## Update Categories
@@ -321,17 +372,84 @@ Starting file-by-file review...
 
 [... continues through all files ...]
 
+🔍 **Verification Check**
+Re-checking for any missed system files...
+
+✅ All system files successfully updated!
+No claudesidian system files remain out of sync with upstream.
+
 🎉 Upgrade complete!
 📈 claudesidian 0.8.2 → 0.8.3
 
 ✅ Updated: 14 files
 ⏭️ Skipped: 1 file (CLAUDE.md - user customization)
+✅ Verified: All system files match upstream
 
 Summary of changes:
 - Fixed init-bootstrap vault selection
 - Improved SessionStart hooks
 - Enhanced user identification prompts
 - Updated all commands to latest versions
+```
+
+### Example: Verification Catches Missed Files
+
+```
+🔍 **Verification Check**
+Re-checking for any missed system files...
+
+⚠️ Warning: 2 files appear to be missed (still marked pending in checklist):
+- .claude/commands/thinking-partner.md [ ]
+- .scripts/vault-stats.sh [ ]
+
+These files haven't been processed yet.
+
+Would you like to complete the upgrade for these files? (y/n) > y
+
+📄 Completing upgrade for missed files...
+
+📄 File: .claude/commands/thinking-partner.md
+   Status: Reviewing diff...
+   Action: Direct update from upstream
+   [x] Updated
+
+📄 File: .scripts/vault-stats.sh
+   Status: Reviewing diff...
+   Action: Direct update from upstream
+   [x] Updated
+
+✅ Verification complete - all system files now match upstream!
+```
+
+### Example: Verification with User Customizations
+
+```
+🔍 **Verification Check**
+Re-checking for any missed system files...
+
+Files still differing from upstream:
+- .claude/commands/thinking-partner.md [x] ← Updated but user customized
+- package.json [x] ← Merged, kept user's custom scripts
+- .claude/commands/daily-review.md [ ] ← Not processed yet!
+
+✅ 2 files intentionally preserve user customizations
+⚠️ 1 file appears to be missed (still pending)
+
+Would you like to:
+1. Review the missed file (.claude/commands/daily-review.md)
+2. Skip verification (keep current state)
+3. See details about customized files
+
+Choice (1/2/3) > 1
+
+📄 File: .claude/commands/daily-review.md
+   Status: Reviewing diff...
+   Action: Direct update from upstream
+   [x] Updated
+
+✅ Verification complete!
+- All required updates applied
+- User customizations preserved where intended
 ```
 
 This intelligent upgrade system leverages Claude's semantic understanding to provide the smoothest possible upgrade experience while ensuring no user customizations are lost.
